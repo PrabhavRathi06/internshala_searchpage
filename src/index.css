@@ -522,7 +522,7 @@ a {
   right: 0;
   background: #fff;
   border-top: 1px solid #ddd;
-  display: flex;
+  display: none;
   justify-content: space-around;
   align-items: center;
   padding: 6px 0 8px;
@@ -550,8 +550,8 @@ a {
   height: 20px;
 }
 
-/* ── Tablet breakpoint (≤960px) ── */
-@media (max-width: 960px) {
+/* ── Tablet breakpoint (≤990px) ── */
+@media (max-width: 990px) {
   .search-columns {
     flex-direction: column;
   }
