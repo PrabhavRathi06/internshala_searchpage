@@ -4,8 +4,7 @@
 
 ## Live Links
 
-- **Frontend**: `[Add Live Link Here]`
-- **Demo Video**: `[Add Demo Video Link Here]`
+- **Frontend**: `https://internshala-searchpage.vercel.app/`
 
 ---
 
