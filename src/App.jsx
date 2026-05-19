@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { ChevronDown, Menu, Filter, Home, Briefcase, BookOpen, Rocket } from 'lucide-react';
+import { ChevronDown, Menu, Filter, Home, Briefcase, BookOpen, Rocket, X, ArrowLeft } from 'lucide-react';
 import FilterPanel from './components/FilterPanel';
 import InternshipList from './components/InternshipList';
 import './index.css';
@@ -10,6 +10,18 @@ const API_URL = 'https://internshala.com/hiring/search';
 function App() {
   const [internships, setInternships] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  useEffect(() => {
+    if (isMobileFilterOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileFilterOpen]);
   const [error, setError] = useState(null);
 
   const [filters, setFilters] = useState({
@@ -299,8 +311,8 @@ function App() {
 
       {/* Mobile Filter Bar */}
       <div className="mobile-filter-bar">
-        <button className="mobile-filter-btn"><Filter size={14} /> Filters</button>
-        <button className="mobile-filter-btn">All Filters</button>
+        <button className="mobile-filter-btn" onClick={() => setIsMobileFilterOpen(true)}><Filter size={14} /> Filters</button>
+        <button className="mobile-filter-btn" onClick={() => setIsMobileFilterOpen(true)}>All Filters</button>
       </div>
 
       <main id="content" className="search_content">
@@ -521,6 +533,33 @@ function App() {
           <span>Launchpads</span>
         </a>
       </nav>
+
+      {/* Mobile Filter Modal Overlay */}
+      {isMobileFilterOpen && (
+        <div className="mobile-filter-modal">
+          <div className="mobile-filter-header">
+            <button className="mobile-filter-close-btn" onClick={() => setIsMobileFilterOpen(false)}>
+              <X size={20} />
+            </button>
+            <h3>Filters</h3>
+            <button className="mobile-filter-clear-btn" onClick={handleClearFilters}>
+              Clear all
+            </button>
+          </div>
+          <div className="mobile-filter-body">
+            <FilterPanel
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              onClearFilters={handleClearFilters}
+            />
+          </div>
+          <div className="mobile-filter-footer">
+            <button className="mobile-filter-apply-btn" onClick={() => setIsMobileFilterOpen(false)}>
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
